@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  client:
+    container_name: client
+    build: ./project/
+    image: stockanalysis
+    tty: true
+    volumes:
+      - ./project/app/:/app/
+      - ./project/stockdata/:/stockdata/
+    environment:
+      TZ: "Asia/Tokyo"
+      CacheDriverServer: redis
+      CacheDriverPort: 6379
+    command: bash
+  # MySQL
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: StockPriceAnalysis
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./db/sql:/docker-entrypoint-initdb.d
+    - ./db/tools:/tools
+    ports:
+    - 3306:3306
+  # phpMyAdmin
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=mysql
+    - PMA_USER=root
+    - PMA_PASSWORD=root
+    ports:
+    - 8888:80
+  redis:
+    container_name: redis
+    image: "redis:latest"
+    ports:
+      - "6379:6379"

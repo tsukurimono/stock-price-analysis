@@ -1,0 +1,4 @@
+mysqlclient
+SQLAlchemy
+asciichartpy
+redis
