@@ -27,7 +27,7 @@ $ docker exec -it client bash
 
 ## コマンド説明
 
-※多いので徐々に記載する。`help`に全て記載されている。
+__基本__
 
 |コマンド名|フォーマット|説明|
 ----|----|----
@@ -45,6 +45,14 @@ $ docker exec -it client bash
 |ticker|`ticker <ticker(string)>`|与えたTickerシンボルをプリセットする。|
 |market|`market <market(string)>`|与えたMarketシンボルをプリセットする。|
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
+|tagload|`tagload /path/to/the/csvfile`|銘柄に紐づけるタグ情報をtsvファイルを読み込んでデータベースに保存する。形式は後述。|
+|tagdelete|`tagdelete <tagname(string)>`|指定のタグをデータベースから削除する。|
+|principal|`principal <amount(decimal)>`|プリセットデータに指定の資金を設定する。シミュレーションで使用する。|
+|today|`today <date(YYYY-MM-DD) *optional>`|プリセットデータに今日の日付を設定する。シミュレーションでこの日を当日として使用する。引数省略時は実日付がセットされる。|
+|listings|`listings <syntax(string)>`|指定の銘柄データを上場扱いにする。その銘柄は各コマンド実行時に対象になる。|
+|delistings|`listings <syntax(string)>`|指定の銘柄データを上場廃止扱いにする。その銘柄は各コマンド実行時に対象にならない。|
+|lastdate|`lastdate <order [desc|asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
+|firstdate|`firstdate <order [desc|asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
 
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
