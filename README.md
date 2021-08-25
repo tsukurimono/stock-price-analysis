@@ -27,7 +27,7 @@ $ docker exec -it client bash
 
 ## コマンド説明
 
-__基本__
+### 基本コマンド
 
 |コマンド名|フォーマット|説明|
 ----|----|----
@@ -45,6 +45,8 @@ __基本__
 |ticker|`ticker <ticker(string)>`|与えたTickerシンボルをプリセットする。|
 |market|`market <market(string)>`|与えたMarketシンボルをプリセットする。|
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
+|from|`from <date(YYYY-MM-DD)>`|与えた日付を期間の開始日付としてプリセットする。|
+|to|`to <date(YYYY-MM-DD)>`|与えた日付を期間の終了日付としてプリセットする。|
 |tagload|`tagload /path/to/the/csvfile`|銘柄に紐づけるタグ情報をtsvファイルを読み込んでデータベースに保存する。形式は後述。|
 |tagdelete|`tagdelete <tagname(string)>`|指定のタグをデータベースから削除する。|
 |principal|`principal <amount(decimal)>`|プリセットデータに指定の資金を設定する。シミュレーションで使用する。|
@@ -92,6 +94,16 @@ VOO,NYSEARCA,2019/04/09 16:00:00,264.22,264.54,263.29,263.83,2016861
 VOO,NYSEARCA,2019/04/10 16:00:00,264.25,264.84,263.85,264.74,2990910
 VOO,NYSEARCA,2019/04/11 16:00:00,265.24,265.24,264.09,264.69,1567704
 VOO,NYSEARCA,2019/04/12 16:00:00,266.33,266.77,265.63,266.48,1903391
+```
+
+## TSVデータ形式
+
+以下のような形式で用意。`tagload`コマンドで読み込む。
+
+`<market name>:<ticker name>tab<tag name(:区切りで複数指定)>`
+
+```
+NYSEARCA:VOO  USA:ETF:INDEX
 ```
 
 ## 保存データバックアップ
