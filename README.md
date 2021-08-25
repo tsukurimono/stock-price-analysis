@@ -45,6 +45,8 @@ __基本__
 |ticker|`ticker <ticker(string)>`|与えたTickerシンボルをプリセットする。|
 |market|`market <market(string)>`|与えたMarketシンボルをプリセットする。|
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
+|from|`from <date(YYYY-MM-DD)>`|与えた日付を期間の開始日付としてプリセットする。|
+|to|`to <date(YYYY-MM-DD)>`|与えた日付を期間の終了日付としてプリセットする。|
 |tagload|`tagload /path/to/the/csvfile`|銘柄に紐づけるタグ情報をtsvファイルを読み込んでデータベースに保存する。形式は後述。|
 |tagdelete|`tagdelete <tagname(string)>`|指定のタグをデータベースから削除する。|
 |principal|`principal <amount(decimal)>`|プリセットデータに指定の資金を設定する。シミュレーションで使用する。|
