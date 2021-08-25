@@ -47,6 +47,7 @@ $ docker exec -it client bash
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
 |from|`from <date(YYYY-MM-DD)>`|与えた日付を期間の開始日付としてプリセットする。|
 |to|`to <date(YYYY-MM-DD)>`|与えた日付を期間の終了日付としてプリセットする。|
+|tag|`tag <tag name(strings)>`|タグをプリセットする。カンマ区切りで複数指定可能。複数指定した場合はタグが使用されるコマンドの中でOR条件で適用される。|
 |tagload|`tagload /path/to/the/csvfile`|銘柄に紐づけるタグ情報をtsvファイルを読み込んでデータベースに保存する。形式は後述。|
 |tagdelete|`tagdelete <tagname(string)>`|指定のタグをデータベースから削除する。|
 |principal|`principal <amount(decimal)>`|プリセットデータに指定の資金を設定する。シミュレーションで使用する。|
@@ -55,6 +56,38 @@ $ docker exec -it client bash
 |delistings|`listings <syntax(string)>`|指定の銘柄データを上場廃止扱いにする。その銘柄は各コマンド実行時に対象にならない。|
 |lastdate|`lastdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
 |firstdate|`firstdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
+
+### 分析コマンド
+
+#### rank
+指定したプリセットデータ、引数を使ってランキングを表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
+
+##### 使用するプリセットデータ
+`Market`/`Tags`/`Today`
+
+##### サブコマンド(price)
+
+`Today`と`term`営業日前の終値を比較し、騰落率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と騰落率がキャッシュに保持される。
+
+`rank price <order [desc/asc]> <term(integer)> <limit(integer)> <offset(integer)> <save cache[True/False]) *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(volume)
+
+`Today`と`term`営業日前の取引量を比較し、騰落率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と騰落率がキャッシュに保持される。
+
+`rank volume <order [desc/asc]> <term(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(rs)
+
+`Today`を基準にRelative Strengthの値を比較し、値をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`rank rs <order [desc/asc]> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(deviation)
+
+`Today`を基準に`shortterm`営業日の期間における終値の標準偏差と`longterm`営業日の期間における終値の標準偏差の比率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`rank deviation <order [desc/asc]> <longterm(integer)> <shortterm(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
 
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
