@@ -51,8 +51,8 @@ __基本__
 |today|`today <date(YYYY-MM-DD) *optional>`|プリセットデータに今日の日付を設定する。シミュレーションでこの日を当日として使用する。引数省略時は実日付がセットされる。|
 |listings|`listings <syntax(string)>`|指定の銘柄データを上場扱いにする。その銘柄は各コマンド実行時に対象になる。|
 |delistings|`listings <syntax(string)>`|指定の銘柄データを上場廃止扱いにする。その銘柄は各コマンド実行時に対象にならない。|
-|lastdate|`lastdate <order [desc|asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
-|firstdate|`firstdate <order [desc|asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
+|lastdate|`lastdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
+|firstdate|`firstdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
 
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
