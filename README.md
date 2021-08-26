@@ -67,10 +67,7 @@ $ docker exec -it client bash
 ### 分析コマンド
 
 #### rank
-指定したプリセットデータ、引数を使ってランキングを表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
-
-##### 使用するプリセットデータ
-`Market`/`Tags`/`Today`
+指定したプリセットデータ(`Market`/`Tags`/`Today`)、引数を使ってランキングを表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
 
 ##### サブコマンド(price)
 
@@ -97,10 +94,7 @@ $ docker exec -it client bash
 `rank deviation <order [desc/asc]> <longterm(integer)> <shortterm(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
 
 #### trend
-指定したプリセットデータ、引数を使ってSMAとの比較を表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
-
-##### 使用するプリセットデータ
-`Market`/`Tags`/`Today`
+指定したプリセットデータ(`Market`/`Tags`/`Today`)、引数を使ってSMAとの比較を表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
 
 ##### サブコマンド(price)
 
