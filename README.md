@@ -89,6 +89,30 @@ $ docker exec -it client bash
 
 `rank deviation <order [desc/asc]> <longterm(integer)> <shortterm(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
 
+#### trend
+指定したプリセットデータ、引数を使ってSMAとの比較を表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
+
+##### 使用するプリセットデータ
+`Market`/`Tags`/`Today`
+
+##### サブコマンド(price)
+
+終値の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における終値がそれよりも上にくる件数と下にくる件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend price <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+##### サブコマンド(volume)
+
+取引量の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における取引量がそれよりも上にくる件数と下にくる件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend volume <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+##### サブコマンド(momentum)
+
+取引量の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における取引量がそれよりも上にくる場合に前日より終値が上がった件数と下がった件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend momentum <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
 
