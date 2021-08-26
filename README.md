@@ -38,15 +38,16 @@ $ docker exec -it client bash
 |search|`search <keyword(string)>`|与えた文字列でデータベース上の銘柄名を検索する。|
 |marketsearch|`marketsearch <keyword(string)>`|与えた文字列でデータベース上の市場を検索する。|
 |tagsearch|`tagsearch <keyword(string)>`|与えた文字列でデータベース上のタグを検索する。|
-|chart|`chart`|プリセットされたデータを用いて画面上にチャートを描画する。|
-|sma|`sma <term(integer)>`|プリセットされたデータを用いて画面上にSMAのチャートを描画する。|
-|wma|`wma <term(integer)>`|プリセットされたデータを用いて画面上にWMAのチャートを描画する。|
-|ema|`ema <term(integer)>`|プリセットされたデータを用いて画面上にEMAのチャートを描画する。|
+|chart|`chart`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上にチャートを描画する。|
+|sma|`sma <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日SMAのチャートを描画する。|
+|wma|`wma <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日WMAのチャートを描画する。|
+|ema|`ema <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日EMAのチャートを描画する。|
 |ticker|`ticker <ticker(string)>`|与えたTickerシンボルをプリセットする。|
 |market|`market <market(string)>`|与えたMarketシンボルをプリセットする。|
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
 |from|`from <date(YYYY-MM-DD)>`|与えた日付を期間の開始日付としてプリセットする。|
 |to|`to <date(YYYY-MM-DD)>`|与えた日付を期間の終了日付としてプリセットする。|
+|tag|`tag <tag name(strings)>`|タグをプリセットする。カンマ区切りで複数指定可能。複数指定した場合はタグが使用されるコマンドの中でOR条件で適用される。|
 |tagload|`tagload /path/to/the/csvfile`|銘柄に紐づけるタグ情報をtsvファイルを読み込んでデータベースに保存する。形式は後述。|
 |tagdelete|`tagdelete <tagname(string)>`|指定のタグをデータベースから削除する。|
 |principal|`principal <amount(decimal)>`|プリセットデータに指定の資金を設定する。シミュレーションで使用する。|
@@ -55,6 +56,63 @@ $ docker exec -it client bash
 |delistings|`listings <syntax(string)>`|指定の銘柄データを上場廃止扱いにする。その銘柄は各コマンド実行時に対象にならない。|
 |lastdate|`lastdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
 |firstdate|`firstdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
+|cacheclear|`cacheclear <cachekey(string)>`|対象のキーのキャッシュデータを削除する|
+|cachemultiple|`cachemultiple <cachekey(string)> <coefficient(decimal)>`|対象のキーのキャッシュデータの値に一律係数を掛けて上書きする。|
+|cacheshow|`cacheshow <cachekey(string)> <limit(integer)> <offset(integer)>`|対象のキーのキャッシュデータを表示する。|
+|cachetag|`cachetag <cachekey(string)> <limit(integer)>`|対象のキーのキャッシュデータに含まれる銘柄を`cache`というタグ名で紐づけてデータベースに登録する。|
+|ath|`ath <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間の最終日終値がATHである銘柄を`Market`/`Tag`から検索して出力する。|
+|atl|`atl <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間の最終日終値がATLである銘柄を`Market`/`Tag`から検索して出力する。|
+|atr|`atr <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間のATRを計算する。対象銘柄は`Market`/`Ticker`で指定。|
+
+### 分析コマンド
+
+#### rank
+指定したプリセットデータ(`Market`/`Tags`/`Today`)、引数を使ってランキングを表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
+
+##### サブコマンド(price)
+
+`Today`と`term`営業日前の終値を比較し、騰落率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と騰落率がキャッシュに保持される。
+
+`rank price <order [desc/asc]> <term(integer)> <limit(integer)> <offset(integer)> <save cache[True/False]) *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(volume)
+
+`Today`と`term`営業日前の取引量を比較し、騰落率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と騰落率がキャッシュに保持される。
+
+`rank volume <order [desc/asc]> <term(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(rs)
+
+`Today`を基準にRelative Strengthの値を比較し、値をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`rank rs <order [desc/asc]> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+#### サブコマンド(deviation)
+
+`Today`を基準に`shortterm`営業日の期間における終値の標準偏差と`longterm`営業日の期間における終値の標準偏差の比率をソートして出力する。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`rank deviation <order [desc/asc]> <longterm(integer)> <shortterm(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+#### trend
+指定したプリセットデータ(`Market`/`Tags`/`Today`)、引数を使ってSMAとの比較を表形式で出力する。キャッシュをONにすると指定したキーで結果が保存される。
+
+##### サブコマンド(price)
+
+終値の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における終値がそれよりも上にくる件数と下にくる件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend price <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+##### サブコマンド(volume)
+
+取引量の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における取引量がそれよりも上にくる件数と下にくる件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend volume <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
+
+##### サブコマンド(momentum)
+
+取引量の`smaterm`日SMAに上下`margin`を考える。`Today`を基準に`term`営業日の期間における取引量がそれよりも上にくる場合に前日より終値が上がった件数と下がった件数を算出して出力する。どちらの件数で降順に出力するか`sortkey`指定可能。キャッシュの保存をTrueにした場合は銘柄と値がキャッシュに保持される。
+
+`trend momentum <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
 
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
