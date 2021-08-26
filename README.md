@@ -114,6 +114,14 @@ $ docker exec -it client bash
 
 `trend momentum <sortkey[up/down]> <term(integer)> <smaterm(integer)> <margin(%)(integer)> <limit(integer)> <offset(integer)> <save cache[True/False] *optional> <cachekey(string) *optional>`
 
+### 予測コマンド
+
+TODO
+
+### バックテスト
+
+TODO
+
 ## プリセットデータ
 アプリケーション起動後、コマンド実行をするか何も入力せずにEnterを押すと以下のような画面表示がされる。
 
