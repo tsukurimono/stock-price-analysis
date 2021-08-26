@@ -38,10 +38,10 @@ $ docker exec -it client bash
 |search|`search <keyword(string)>`|与えた文字列でデータベース上の銘柄名を検索する。|
 |marketsearch|`marketsearch <keyword(string)>`|与えた文字列でデータベース上の市場を検索する。|
 |tagsearch|`tagsearch <keyword(string)>`|与えた文字列でデータベース上のタグを検索する。|
-|chart|`chart`|プリセットされたデータを用いて画面上にチャートを描画する。|
-|sma|`sma <term(integer)>`|プリセットされたデータを用いて画面上にSMAのチャートを描画する。|
-|wma|`wma <term(integer)>`|プリセットされたデータを用いて画面上にWMAのチャートを描画する。|
-|ema|`ema <term(integer)>`|プリセットされたデータを用いて画面上にEMAのチャートを描画する。|
+|chart|`chart`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上にチャートを描画する。|
+|sma|`sma <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日SMAのチャートを描画する。|
+|wma|`wma <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日WMAのチャートを描画する。|
+|ema|`ema <term(integer)>`|プリセットされたデータ(`From`/`To`/`Market`/`Ticker`)を用いて画面上に`term`日EMAのチャートを描画する。|
 |ticker|`ticker <ticker(string)>`|与えたTickerシンボルをプリセットする。|
 |market|`market <market(string)>`|与えたMarketシンボルをプリセットする。|
 |syntax|`syntax <market(string)>:<ticker(string)>`|与えたMarketとTickerシンボルをプリセットする。|
@@ -56,6 +56,13 @@ $ docker exec -it client bash
 |delistings|`listings <syntax(string)>`|指定の銘柄データを上場廃止扱いにする。その銘柄は各コマンド実行時に対象にならない。|
 |lastdate|`lastdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最新の日付をソートして表示する。|
 |firstdate|`firstdate <order [desc/asc]> <limit(integer)> <offset(integer)>`|各銘柄のヒストリカルデータの最初の日付をソートして表示する。|
+|cacheclear|`cacheclear <cachekey(string)>`|対象のキーのキャッシュデータを削除する|
+|cachemultiple|`cachemultiple <cachekey(string)> <coefficient(decimal)>`|対象のキーのキャッシュデータの値に一律係数を掛けて上書きする。|
+|cacheshow|`cacheshow <cachekey(string)> <limit(integer)> <offset(integer)>`|対象のキーのキャッシュデータを表示する。|
+|cachetag|`cachetag <cachekey(string)> <limit(integer)>`|対象のキーのキャッシュデータに含まれる銘柄を`cache`というタグ名で紐づけてデータベースに登録する。|
+|ath|`ath <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間の最終日終値がATHである銘柄を`Market`/`Tag`から検索して出力する。|
+|atl|`atl <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間の最終日終値がATLである銘柄を`Market`/`Tag`から検索して出力する。|
+|atr|`atr <term(integer)> <basedate(YYYY-MM-DD) *optional>`|`basedate`(省略時は`Today`)を基準に`term`営業日の間のATRを計算する。対象銘柄は`Market`/`Ticker`で指定。|
 
 ### 分析コマンド
 
